@@ -1,0 +1,11 @@
+@import "~bootstrap/scss/_functions";
+@import "./helpers/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "./dashboard";
+
+.logo{
+    background-image: url(https://upload.cc/i1/2020/09/19/9cNkyP.png);
+    background-size: cover;
+    background-position: center center;
+    height:40px;
+}
