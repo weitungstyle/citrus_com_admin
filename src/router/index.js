@@ -1,11 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-export default new VueRouter({
-  linkActiveClass: 'active',
-});
 const routes = [
   {
     path: '/login',
@@ -14,7 +11,7 @@ const routes = [
   },
   {
     path: '*',
-    redirect: 'login',
+    redirect: '/login',
   },
   {
     path: '/admin',
@@ -42,8 +39,11 @@ const routes = [
         }
     ],
 },
-]
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+  linkActiveClass : 'active',
+});
+
+export default router;

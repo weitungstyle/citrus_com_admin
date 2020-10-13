@@ -2,7 +2,9 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div class="text-right mt-5 mb-2">
-      <button class="btn btn-primary" @click="openModal(true)">ADD NEW PRODUCT</button>
+      <button class="btn btn-primary" @click="openModal(true)">
+        ADD NEW PRODUCT
+      </button>
     </div>
     <table class="table">
       <thead>
@@ -19,16 +21,28 @@
         <tr v-for="(item, key) in products" :key="key">
           <td>{{ item.category }}</td>
           <td>{{ item.title }}</td>
-          <td class="text-right">{{ item.origin_price | currency}}</td>
-          <td class="text-right">{{ item.price | currency}}</td>
+          <td class="text-right">{{ item.origin_price | currency }}</td>
+          <td class="text-right">{{ item.price | currency }}</td>
           <td>
-            <span v-if="item.is_enabled == 1" class="text-success">Enabled</span>
+            <span v-if="item.is_enabled == 1" class="text-success"
+              >Enabled</span
+            >
             <span v-else>Not Enabled</span>
           </td>
           <td>
             <div class="d-flex">
-              <button class="btn btn-outline-primary btn-sm" @click="openModal(false, item)">E D I T</button>
-              <button class="btn btn-outline-danger btn-sm" @click="openRemoveModal(item)">REMOVE</button>
+              <button
+                class="btn btn-outline-primary btn-sm"
+                @click="openModal(false, item)"
+              >
+                E D I T
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                @click="openRemoveModal(item)"
+              >
+                REMOVE
+              </button>
             </div>
           </td>
         </tr>
@@ -50,7 +64,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>ADD / EDIT PRODUCT</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -70,7 +89,10 @@
                 <div class="form-group">
                   <label for="customFile">
                     Or uploade the main image
-                    <i class="fas fa-spinner fa-pulse" v-if="status.fileUploading"></i>
+                    <i
+                      class="fas fa-spinner fa-pulse"
+                      v-if="status.fileUploading"
+                    ></i>
                   </label>
                   <input
                     type="file"
@@ -97,11 +119,11 @@
                   />
                 </div>
                 <div class="form-group mt-2">
-                  <label for="color"
-                    >Color</label
-                  >
-                  <select class="form-control"
-                    id="color" v-model="tempProduct.color"
+                  <label for="color">Color</label>
+                  <select
+                    class="form-control"
+                    id="color"
+                    v-model="tempProduct.color"
                   >
                     <option value="black">black</option>
                     <option value="white">white</option>
@@ -197,15 +219,29 @@
                       :false-value="0"
                       id="is_enabled"
                     />
-                    <label class="form-check-label" for="is_enabled">Enabled</label>
+                    <label class="form-check-label" for="is_enabled"
+                      >Enabled</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" @click="updateProduct">Comfirm</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="updateProduct"
+            >
+              Comfirm
+            </button>
           </div>
         </div>
       </div>
@@ -223,14 +259,29 @@
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
             <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">Are you sure you want to remove this product?</div>
+          <div class="modal-body">
+            Are you sure you want to remove this product?
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" @click="removeProduct">Comfirm</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" @click="removeProduct">
+              Comfirm
+            </button>
           </div>
         </div>
       </div>
@@ -291,7 +342,7 @@ export default {
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
         httpMethod = "put";
       }
-      this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
+      vm.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
         console.log(response.data);
         if (response.data.success) {
           $("#productModal").modal("hide");
@@ -320,7 +371,7 @@ export default {
       formData.append("file-to-upload", uploadedImage);
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
       vm.status.fileUploading = true;
-      this.$http
+      vm.$http
         .post(url, formData, {
           headers: {
             "Content-Type": "multipart/form-data",

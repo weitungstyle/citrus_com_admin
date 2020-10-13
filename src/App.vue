@@ -7,15 +7,9 @@
 <script>
 export default {
   name: "App",
-  data() {
-    return {};
-  },
-  created() {
-    console.log(process.env.VUE_APP_APIPATH);
-  }
 };
 </script>
 
 <style lang="scss">
-@import "./assets/all.scss";
+@import "./assets/all";
 </style>
