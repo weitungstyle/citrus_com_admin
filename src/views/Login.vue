@@ -34,27 +34,27 @@
 
 <script>
 export default {
-  data() {
+  name: 'Login',
+  data () {
     return {
       user: {
-        username: "",
-        password: "",
-      },
-    };
+        username: '',
+        password: ''
+      }
+    }
   },
   methods: {
-    signin() {
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      const vm = this;
+    signin () {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`
       vm.$http.post(api, vm.user).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
-          vm.$router.push('/admin/products');
+          vm.$router.push('/admin/products')
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>

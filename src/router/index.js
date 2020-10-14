@@ -1,49 +1,49 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue'),
+    component: () => import('../views/Login.vue')
   },
   {
     path: '*',
-    redirect: '/login',
+    redirect: '/login'
   },
   {
     path: '/admin',
-    name: 'Dashboard', 
-    component: () => import('../components/Dashboard.vue'),
+    name: 'Layout',
+    component: () => import('../components/Layout.vue'),
     children: [
-        {
-            path: 'orders', 
-            name: 'Orders',
-            component: () => import('../views/Orders.vue'),
-            meta: { requiresAuth: true },
-        },
-        {
-            path: 'products', 
-            name: 'Products',
-            component: () => import('../views/Products.vue'),
-            meta: { requiresAuth: true },
-        },
-        
-        {
-            path: 'coupons', 
-            name: 'Coupons',
-            component: () => import('../views/Coupons.vue'),
-            meta: { requiresAuth: true },
-        }
-    ],
-},
-];
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: () => import('../views/Orders.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'products',
+        name: 'Products',
+        component: () => import('../views/Products.vue'),
+        meta: { requiresAuth: true }
+      },
+
+      {
+        path: 'coupons',
+        name: 'Coupons',
+        component: () => import('../views/Coupons.vue'),
+        meta: { requiresAuth: true }
+      }
+    ]
+  }
+]
 
 const router = new VueRouter({
   routes,
-  linkActiveClass : 'active',
-});
+  linkActiveClass: 'active'
+})
 
-export default router;
+export default router

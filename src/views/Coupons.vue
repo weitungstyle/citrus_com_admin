@@ -2,7 +2,7 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div class="text-right mt-5 mb-2">
-      <button class="btn btn-primary" @click="openModal(true)">ADD COUPON</button>
+      <button type="button" class="btn btn-primary" @click="openModal(true)">ADD COUPON</button>
     </div>
     <table class="table">
       <thead>
@@ -27,8 +27,8 @@
           </td>
           <td>
             <div class="d-flex">
-              <button class="btn btn-outline-primary btn-sm" @click="openModal(false, item)">E D I T</button>
-              <button class="btn btn-outline-danger btn-sm" @click="openRemoveModal(item)">REMOVE</button>
+              <button type="button" class="btn btn-outline-primary btn-sm" @click="openModal(false, item)">E D I T</button>
+              <button type="button" class="btn btn-outline-danger btn-sm" @click="openRemoveModal(item)">REMOVE</button>
             </div>
           </td>
         </tr>
@@ -146,81 +146,77 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from '../components/Pagination.vue';
+import $ from 'jquery'
+import Pagination from '@/components/Pagination.vue'
 export default {
-  data() {
+  name: 'Coupons',
+  data () {
     return {
       coupons: [],
       pagination: {},
       tempCoupon: {},
       isNew: false,
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   components: {
-    Pagination,
+    Pagination
   },
   methods: {
-    getCoupons(page = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.coupons = response.data.coupons;
-        vm.pagination = response.data.pagination;
-      });
+    getCoupons (page = 1) {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`
+      vm.isLoading = true
+      vm.$http.get(api).then((response) => {
+        vm.isLoading = false
+        vm.coupons = response.data.coupons
+        vm.pagination = response.data.pagination
+      })
     },
-    openModal(isNew, item) {
+    openModal (isNew, item) {
       if (isNew) {
-        this.tempCoupon = {};
-        this.isNew = true;
+        this.tempCoupon = {}
+        this.isNew = true
       } else {
-        this.tempCoupon = Object.assign({}, item);
-        this.isNew = false;
+        this.tempCoupon = Object.assign({}, item)
+        this.isNew = false
       }
-      $("#couponModal").modal("show");
+      $('#couponModal').modal('show')
     },
-    updateCoupon() {
-      const vm = this;
-      vm.tempCoupon.due_date = Date.parse(new Date(vm.tempCoupon.date))/1000;
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
-      let httpMethod = "post";
+    updateCoupon () {
+      const vm = this
+      vm.tempCoupon.due_date = Date.parse(new Date(vm.tempCoupon.date)) / 1000
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`
+      let httpMethod = 'post'
       if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
-        httpMethod = "put";
+        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`
+        httpMethod = 'put'
       }
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
-        console.log(response.data);
+      vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
-          $("#couponModal").modal("hide");
-          vm.getCoupons();
-          
+          $('#couponModal').modal('hide')
+          vm.getCoupons()
         } else {
-          $("#couponModal").modal("hide");
-          vm.getCoupons();
-          console.log("false to add/edit");
+          $('#couponModal').modal('hide')
+          vm.getCoupons()
         }
-      });
+      })
     },
-    openRemoveModal(item) {
-      $("#removeModal").modal("show");
-      this.tempCoupon = Object.assign({}, item);
+    openRemoveModal (item) {
+      $('#removeModal').modal('show')
+      this.tempCoupon = Object.assign({}, item)
     },
-    removeCoupon() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
+    removeCoupon () {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`
       vm.$http.delete(api).then((response) => {
-        console.log(response, vm.tempCoupon);
-        $("#removeModal").modal("hide");
-        vm.getCoupons();
-      });
-    },
+        $('#removeModal').modal('hide')
+        vm.getCoupons()
+      })
+    }
   },
-  created() {
-    this.getCoupons();
-  },
-};
+  created () {
+    this.getCoupons()
+  }
+}
 </script>

@@ -10,7 +10,7 @@
         </a>
       </h6>
       <ul class="nav flex-column">
-        <li class="nav-item" @click=" isChoose = 'Orders'">          
+        <li class="nav-item" @click=" isChoose = 'Orders'">
           <router-link class="nav-link" to="/admin/orders">
             <span class="fas fa-angle-right" v-if="isChoose == 'Orders'"></span>
             Orders
@@ -35,10 +35,11 @@
 
 <script>
 export default {
-  data() {
+  name: 'Sidebar',
+  data () {
     return {
-      isChoose: 'Products',
-    };
-  },
+      isChoose: 'Products'
+    }
+  }
 }
 </script>

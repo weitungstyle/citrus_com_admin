@@ -37,14 +37,15 @@
 
 <script>
 export default {
-  data() {
+  name: 'Pagination',
+  data () {
     return {}
   },
   props: ['pageIn'],
   methods: {
-    geInfosInPagis(page) {
-      this.$emit('getInfosFromPagi', page);
+    geInfosInPagis (page) {
+      this.$emit('getInfosFromPagi', page)
     }
-  },
+  }
 }
 </script>

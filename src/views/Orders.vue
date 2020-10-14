@@ -37,50 +37,49 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from "../components/Pagination.vue";
+import Pagination from '@/components/Pagination.vue'
 export default {
-  data() {
+  name: 'Orders',
+  data () {
     return {
       orders: [],
       pagination: {},
       tempOrders: {},
       isNew: false,
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   components: {
-    Pagination,
+    Pagination
   },
   methods: {
-    getOrders(page = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.orders = response.data.orders;
-        vm.pagination = response.data.pagination;
-      });
-    },
+    getOrders (page = 1) {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
+      vm.isLoading = true
+      vm.$http.get(api).then((response) => {
+        vm.isLoading = false
+        vm.orders = response.data.orders
+        vm.pagination = response.data.pagination
+      })
+    }
   },
   computed: {
-    sortOrder() {
-      const vm = this;
-      let newOrder = [];
+    sortOrder () {
+      const vm = this
+      let newOrder = []
       if (vm.orders.length) {
         newOrder = vm.orders.sort((a, b) => {
-          const aIsPaid = a.is_paid ? 1 : 0;
-          const bIsPaid = b.is_paid ? 1 : 0;
-          return bIsPaid - aIsPaid;
-        });
+          const aIsPaid = a.is_paid ? 1 : 0
+          const bIsPaid = b.is_paid ? 1 : 0
+          return bIsPaid - aIsPaid
+        })
       }
-      return newOrder;
-    },
+      return newOrder
+    }
   },
-  created() {
-    this.getOrders();
-  },
-};
+  created () {
+    this.getOrders()
+  }
+}
 </script>

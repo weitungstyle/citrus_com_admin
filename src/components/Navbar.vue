@@ -13,20 +13,20 @@
 
 <script>
 export default {
-  data() {
+  name: 'Navbar',
+  data () {
     return {}
   },
-  methods:{
-    signOut() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/logout`;
-      this.$http.post(url).then((response) => {
-        console.log(response.data);
+  methods: {
+    signOut () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/logout`
+      vm.$http.post(url).then((response) => {
         if (response.data.success) {
-          vm.$router.push('/login');
+          vm.$router.push('/login')
         }
-      });
-    },
-  },
+      })
+    }
+  }
 }
 </script>
