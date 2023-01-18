@@ -22,7 +22,7 @@
           <td>{{ item.due_date | transdate }}</td>
           <td>{{ item.percent }}</td>
           <td>
-            <span v-if="item.is_enabled == 1" class="text-success">Enabled</span>
+            <span v-if="item.isEnabled == 1" class="text-success">Enabled</span>
             <span v-else>Not Enabled</span>
           </td>
           <td>
@@ -101,12 +101,12 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  v-model="tempCoupon.is_enabled"
+                  v-model="tempCoupon.isEnabled"
                   :true-value="1"
                   :false-value="0"
-                  id="is_enabled"
+                  id="isEnabled"
                 />
-                <label class="form-check-label" for="is_enabled">Enabled</label>
+                <label class="form-check-label" for="isEnabled">Enabled</label>
               </div>
             </div>
           </div>

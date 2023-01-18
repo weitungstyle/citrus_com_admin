@@ -26,7 +26,7 @@
           </th>
           <td class="text-right">{{ item.total | currency }}</td>
           <td class="text-right">
-            <span v-if="item.is_paid" class="text-success">Paid</span>
+            <span v-if="item.isPaid" class="text-success">Paid</span>
             <span v-else class="text-danger">Unpaid</span>
           </td>
         </tr>
@@ -70,8 +70,8 @@ export default {
       let newOrder = []
       if (vm.orders.length) {
         newOrder = vm.orders.sort((a, b) => {
-          const aIsPaid = a.is_paid ? 1 : 0
-          const bIsPaid = b.is_paid ? 1 : 0
+          const aIsPaid = a.isPaid ? 1 : 0
+          const bIsPaid = b.isPaid ? 1 : 0
           return bIsPaid - aIsPaid
         })
       }

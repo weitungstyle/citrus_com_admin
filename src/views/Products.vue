@@ -21,10 +21,10 @@
         <tr v-for="(item, key) in products" :key="key">
           <td>{{ item.category }}</td>
           <td>{{ item.title }}</td>
-          <td class="text-right">{{ item.origin_price | currency }}</td>
+          <td class="text-right">{{ item.originPrice | currency }}</td>
           <td class="text-right">{{ item.price | currency }}</td>
           <td>
-            <span v-if="item.is_enabled == 1" class="text-success"
+            <span v-if="item.isEnabled == 1" class="text-success"
               >Enabled</span
             >
             <span v-else>Not Enabled</span>
@@ -114,7 +114,7 @@
                     type="text"
                     class="form-control"
                     id="image2"
-                    v-model="tempProduct.imgModelUrl"
+                    v-model="tempProduct.image"
                     placeholder="Fill in the look picture URL"
                   />
                 </div>
@@ -167,12 +167,12 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="origin_price">Original Price</label>
+                    <label for="originPrice">Original Price</label>
                     <input
                       type="number"
                       class="form-control"
-                      id="origin_price"
-                      v-model="tempProduct.origin_price"
+                      id="originPrice"
+                      v-model="tempProduct.originPrice"
                       placeholder="Fill in the original price"
                     />
                   </div>
@@ -214,12 +214,12 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      v-model="tempProduct.is_enabled"
+                      v-model="tempProduct.isEnabled"
                       :true-value="1"
                       :false-value="0"
-                      id="is_enabled"
+                      id="isEnabled"
                     />
-                    <label class="form-check-label" for="is_enabled"
+                    <label class="form-check-label" for="isEnabled"
                       >Enabled</label
                     >
                   </div>
