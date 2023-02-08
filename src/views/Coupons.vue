@@ -19,7 +19,7 @@
         <tr v-for="(item, key) in coupons" :key="key">
           <td>{{ item.title }}</td>
           <td>{{ item.code }}</td>
-          <td>{{ item.due_date | transdate }}</td>
+          <td>{{ item.dueDate | transdate }}</td>
           <td>{{ item.percent }}</td>
           <td>
             <span v-if="item.isEnabled == 1" class="text-success">Enabled</span>
@@ -165,12 +165,15 @@ export default {
   methods: {
     getCoupons (page = 1) {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/coupons?page=${page}`
       vm.isLoading = true
       vm.$http.get(api).then((response) => {
-        vm.isLoading = false
         vm.coupons = response.data.coupons
         vm.pagination = response.data.pagination
+      }).catch((error) => {
+        console.log('Coupons.vue => ', api, error)
+      }).finally(() => {
+        vm.isLoading = false
       })
     },
     openModal (isNew, item) {
@@ -185,21 +188,20 @@ export default {
     },
     updateCoupon () {
       const vm = this
-      vm.tempCoupon.due_date = Date.parse(new Date(vm.tempCoupon.date)) / 1000
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`
+      vm.tempCoupon.dueDate = Date.parse(new Date(vm.tempCoupon.date)) / 1000
+      let api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon`
       let httpMethod = 'post'
       if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`
+        api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon/${vm.tempCoupon.id}`
         httpMethod = 'put'
       }
       vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
-        if (response.data.success) {
-          $('#couponModal').modal('hide')
-          vm.getCoupons()
-        } else {
-          $('#couponModal').modal('hide')
-          vm.getCoupons()
-        }
+        console.log(response)
+      }).catch((error) => {
+        console.log('Coupons.vue => ', api, error)
+      }).finally(() => {
+        $('#couponModal').modal('hide')
+        vm.getCoupons()
       })
     },
     openRemoveModal (item) {
@@ -208,8 +210,12 @@ export default {
     },
     removeCoupon () {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon/${vm.tempCoupon.id}`
       vm.$http.delete(api).then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log('Coupons.vue => ', api, error)
+      }).finally(() => {
         $('#removeModal').modal('hide')
         vm.getCoupons()
       })

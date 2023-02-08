@@ -22,9 +22,9 @@ export default {
       const vm = this
       const url = `${process.env.VUE_APP_APIPATH}/logout`
       vm.$http.post(url).then((response) => {
-        if (response.data.success) {
-          vm.$router.push('/login')
-        }
+        vm.$router.push('/login')
+      }).catch((error) => {
+        console.log('Navbar.vue => ', api, error)
       })
     }
   }

@@ -312,12 +312,15 @@ export default {
   methods: {
     getProducts (page = 1) {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/products?page=${page}`
       vm.isLoading = true
       vm.$http.get(api).then((response) => {
-        vm.isLoading = false
         vm.products = response.data.products
         vm.pagination = response.data.pagination
+      }).catch((error) => {
+        console.log('Products.vue => ', api, error)
+      }).finally(() => {
+        vm.isLoading = false
       })
     },
     openModal (isNew, item) {
@@ -337,26 +340,29 @@ export default {
     },
     updateProduct () {
       const vm = this
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`
+      let api = `${process.env.VUE_APP_APIPATH}/api/admin/product`
       let httpMethod = 'post'
       if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`
+        api = `${process.env.VUE_APP_APIPATH}/api/admin/product/${vm.tempProduct.id}`
         httpMethod = 'put'
       }
       vm.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        if (response.data.success) {
-          $('#productModal').modal('hide')
-          vm.getProducts()
-        } else {
-          $('#productModal').modal('hide')
-          vm.getProducts()
-        }
+        console.log(response)
+      }).catch((error) => {
+        console.log('Products.vue => ', api, error)
+      }).finally(() => {
+        $('#productModal').modal('hide')
+        vm.getProducts()
       })
     },
     removeProduct () {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/product/${vm.tempProduct.id}`
       vm.$http.delete(api).then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log('Products.vue => ', api, error)
+      }).finally(() => {
         $('#removeModal').modal('hide')
         vm.getProducts()
       })
@@ -366,7 +372,7 @@ export default {
       const uploadedImage = vm.$refs.files.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadedImage)
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`
+      const url = `${process.env.VUE_APP_APIPATH}/api/admin/upload`
       vm.status.fileUploading = true
       vm.$http
         .post(url, formData, {
@@ -375,12 +381,12 @@ export default {
           }
         })
         .then((response) => {
+          vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl)
+        }).catch((error) => {
+          console.log('Products.vue => ', api, error)
+          vm.$bus.$emit('message:push', error.data.message, 'danger')
+        }).finally(() => {
           vm.status.fileUploading = false
-          if (response.data.success) {
-            vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl)
-          } else {
-            vm.$bus.$emit('message:push', response.data.message, 'danger')
-          }
         })
     }
   },

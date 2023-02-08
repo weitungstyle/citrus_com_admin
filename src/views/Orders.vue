@@ -6,17 +6,17 @@
         <tr>
           <th width="120">Order Date</th>
           <th width="160">Customer Name</th>
-          <th>E-mail</th>
+          <th>Telephone</th>
           <th>Purchase List</th>
           <th width="120" class="text-right">Total</th>
           <th width="120" class="text-right">Paid</th>
         </tr>
       </thead>
       <tbody v-if="orders.length">
-        <tr v-for="(item, key) in sortOrder" :key="key">
-          <td>{{ item.create_at | transdate }}</td>
-          <td>{{ item.user.name }}</td>
-          <td>{{ item.user.email }}</td>
+        <tr v-for="(item, key) in orders" :key="key">
+          <td>{{ item.createAt | transdate }}</td>
+          <td>{{ item.user.firstName }} {{ item.user.lastName }}</td>
+          <td>{{ item.user.telCode }} {{ item.user.tel }}</td>
           <th>
             <ul class="list-unstyled">
               <li v-for="(product, i) in item.products" :key="i">
@@ -55,27 +55,16 @@ export default {
   methods: {
     getOrders (page = 1) {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/orders?page=${page}`
       vm.isLoading = true
       vm.$http.get(api).then((response) => {
-        vm.isLoading = false
         vm.orders = response.data.orders
         vm.pagination = response.data.pagination
+      }).catch((error) => {
+        console.log('Orders.vue => ', api, error)
+      }).finally(() => {
+        vm.isLoading = false
       })
-    }
-  },
-  computed: {
-    sortOrder () {
-      const vm = this
-      let newOrder = []
-      if (vm.orders.length) {
-        newOrder = vm.orders.sort((a, b) => {
-          const aIsPaid = a.isPaid ? 1 : 0
-          const bIsPaid = b.isPaid ? 1 : 0
-          return bIsPaid - aIsPaid
-        })
-      }
-      return newOrder
     }
   },
   created () {
