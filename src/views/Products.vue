@@ -372,10 +372,10 @@ export default {
       const uploadedImage = vm.$refs.files.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadedImage)
-      const url = `${process.env.VUE_APP_APIPATH}/api/admin/upload`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/upload`
       vm.status.fileUploading = true
       vm.$http
-        .post(url, formData, {
+        .post(api, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
