@@ -46,7 +46,7 @@ export default {
   methods: {
     signin () {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/signin`
       vm.$http.post(api, vm.user).then((response) => {
         vm.$router.push('/admin/products')
       }).catch((error) => {
