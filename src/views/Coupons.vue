@@ -192,7 +192,7 @@ export default {
       let api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon`
       let httpMethod = 'post'
       if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon/${vm.tempCoupon.id}`
+        api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon/${vm.tempCoupon._id}`
         httpMethod = 'put'
       }
       vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
@@ -210,7 +210,7 @@ export default {
     },
     removeCoupon () {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon/${vm.tempCoupon.id}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/coupon/${vm.tempCoupon._id}`
       vm.$http.delete(api).then((response) => {
         console.log(response)
       }).catch((error) => {

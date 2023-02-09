@@ -343,7 +343,7 @@ export default {
       let api = `${process.env.VUE_APP_APIPATH}/api/admin/product`
       let httpMethod = 'post'
       if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/admin/product/${vm.tempProduct.id}`
+        api = `${process.env.VUE_APP_APIPATH}/api/admin/product/${vm.tempProduct._id}`
         httpMethod = 'put'
       }
       vm.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
@@ -357,7 +357,7 @@ export default {
     },
     removeProduct () {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/admin/product/${vm.tempProduct.id}`
+      const api = `${process.env.VUE_APP_APIPATH}/api/admin/product/${vm.tempProduct._id}`
       vm.$http.delete(api).then((response) => {
         console.log(response)
       }).catch((error) => {
