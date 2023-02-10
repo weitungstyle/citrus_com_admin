@@ -48,6 +48,9 @@ export default {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/admin/signin`
       vm.$http.post(api, vm.user).then((response) => {
+        const token = response.data.token
+        const expired = response.data.expired
+        document.cookie = `loginToken=${token}; expires=${new Date(expired)}`
         vm.$router.push('/admin/products')
       }).catch((error) => {
         console.log('Login.vue => ', api, error)
