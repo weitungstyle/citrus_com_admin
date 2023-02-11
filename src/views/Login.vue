@@ -50,7 +50,7 @@ export default {
       vm.$http.post(api, vm.user).then((response) => {
         const token = response.data.token
         const expired = response.data.expired
-        document.cookie = `loginToken=${token}; expires=${new Date(expired)}`
+        document.cookie = `loginToken=${token}; expires=${new Date(expired)};`
         vm.$router.push('/admin/products')
       }).catch((error) => {
         console.log('Login.vue => ', api, error)
