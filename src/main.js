@@ -32,6 +32,7 @@ router.beforeEach((to, from, next) => {
     axios.post(api).then((response) => {
       next()
     }).catch((error) => {
+      console.log('main.js => ', api, error)
       next({ path: '/login' })
     })
   } else {
