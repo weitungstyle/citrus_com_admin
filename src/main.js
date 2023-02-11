@@ -30,13 +30,9 @@ router.beforeEach((to, from, next) => {
     const loginToken = document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     axios.defaults.headers.common.Authorization = `Bearer ${loginToken}`
     axios.post(api).then((response) => {
-      if (response.data.success) {
-        next()
-      } else {
-        next({
-          path: '/login'
-        })
-      }
+      next()
+    }).catch((error) => {
+      next({ path: '/login' })
     })
   } else {
     next()
