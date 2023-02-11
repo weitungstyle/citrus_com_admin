@@ -30,7 +30,7 @@ export default {
   },
   created () {
     const loginToken = document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    this.$http.defaults.headers.common.Token = loginToken
+    this.$http.defaults.headers.common.Authorization = loginToken
   }
 }
 </script>
