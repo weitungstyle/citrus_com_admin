@@ -17,7 +17,7 @@ Vue.component('Loading', Loading)
 Vue.filter('currency', currencyFilter)
 Vue.filter('transdate', dateFilter)
 
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 
 new Vue({
   router,
@@ -27,6 +27,8 @@ new Vue({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`
+    const loginToken = document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    axios.defaults.headers.common.Authorization = loginToken
     axios.post(api).then((response) => {
       if (response.data.success) {
         next()
